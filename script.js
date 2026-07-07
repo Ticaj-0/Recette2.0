@@ -1,140 +1,548 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const recipesGrid = document.querySelector('.recipes-grid');
-    const recipes = Array.from(recipesGrid.children);
-    const originalOrder = recipes.map(recipe => recipe);
+document.addEventListener("DOMContentLoaded", function () {
+
+    var recipesGrid = document.querySelector(".recipes-grid");
+    var sortCriteria = document.getElementById("sort-criteria");
+    var searchInput = document.getElementById("search-input");
+
+
+    /*
+    ==========================
+    ETOILES
+    ==========================
+    */
+
     function updateStars(ratingElement, value) {
-        const stars = ratingElement.querySelectorAll('.star');
-        stars.forEach(star => {
-            if (parseInt(star.getAttribute('data-value'), 10) <= parseInt(value, 10)) {
-                star.classList.add('filled');
+
+        var stars = ratingElement.querySelectorAll(".star");
+
+        for (var i = 0; i < stars.length; i++) {
+
+            var starValue = parseInt(
+                stars[i].getAttribute("data-value")
+            );
+
+            if (starValue <= value) {
+                stars[i].classList.add("filled");
             } else {
-                star.classList.remove('filled');
+                stars[i].classList.remove("filled");
             }
-        });
-    }
-    function updateRecipeRating(recipe, ratingValue) {
-        recipe.setAttribute('data-rating', ratingValue);
-        updateStars(recipe.querySelector('.rating'), ratingValue);
-        localStorage.setItem(`rating-${recipe.getAttribute('data-id')}`, ratingValue);
-    }
-    function sortRecipes(criteria) {
-        let sortedRecipes;
-        if (criteria === 'default') {
-            sortedRecipes = [...originalOrder];
-        } else {
-            sortedRecipes = [...recipesGrid.children].sort((a, b) => {
-                const aValue = parseInt(a.getAttribute(`data-${criteria}`), 10) || 0;
-                const bValue = parseInt(b.getAttribute(`data-${criteria}`), 10) || 0;
-                return criteria === 'rating' ? bValue - aValue : aValue - bValue;
-            });
         }
-        recipesGrid.innerHTML = '';
-        sortedRecipes.forEach(recipe => recipesGrid.appendChild(recipe));
     }
-    function filterRecipes(term) {
-        recipes.forEach(recipe => {
-            const title = recipe.querySelector('h2').textContent.toLowerCase();
-            const description = recipe.querySelector('p').textContent.toLowerCase();
-            recipe.style.display = (title.includes(term) || description.includes(term)) ? '' : 'none';
-        });
+
+
+
+    function updateRecipeRating(recipe, value) {
+
+        recipe.setAttribute("data-rating", value);
+
+        updateStars(
+            recipe.querySelector(".rating"),
+            value
+        );
+
+
+        localStorage.setItem(
+            "rating-" + recipe.getAttribute("data-id"),
+            value
+        );
+
     }
+
+
+
+
+
     function setupStars() {
-        document.querySelectorAll('.rating').forEach(rating => {
-            const stars = rating.querySelectorAll('.star');
-            stars.forEach(star => {
-                star.addEventListener('click', () => {
-                    const value = star.getAttribute('data-value');
-                    const recipe = rating.closest('.recipe-card');
-                    const currentRating = recipe.getAttribute('data-rating');
-                    // Update the rating and sort recipes
-                    updateRecipeRating(recipe, value === currentRating ? '0' : value);
-                    sortRecipes(document.getElementById('sort-criteria').value);
-                });
-                star.addEventListener('mouseover', () => {
-                    // Highlight stars up to the hovered star
-                    updateStars(rating, star.getAttribute('data-value'));
-                });
-                star.addEventListener('mouseout', () => {
-                    // Restore stars to the current rating
-                    const recipe = rating.closest('.recipe-card');
-                    updateStars(rating, recipe.getAttribute('data-rating'));
-                });
-            });
-            // Initialize stars for each rating
-            const recipe = rating.closest('.recipe-card');
-            const savedRating = localStorage.getItem(`rating-${recipe.getAttribute('data-id')}`) || rating.getAttribute('data-rating');
-            recipe.setAttribute('data-rating', savedRating);
-            updateStars(rating, savedRating);
-        });
+
+        var ratings = document.querySelectorAll(".rating");
+
+
+        for (var i = 0; i < ratings.length; i++) {
+
+            (function(rating){
+
+                var recipe =
+                    rating.closest(".recipe-card");
+
+
+                if (!recipe) return;
+
+
+                var stars =
+                    rating.querySelectorAll(".star");
+
+
+                var saved =
+                    localStorage.getItem(
+                        "rating-" +
+                        recipe.getAttribute("data-id")
+                    );
+
+
+                if (saved === null) {
+                    saved = recipe.getAttribute("data-rating") || 0;
+                }
+
+
+                recipe.setAttribute(
+                    "data-rating",
+                    saved
+                );
+
+
+                updateStars(
+                    rating,
+                    parseInt(saved)
+                );
+
+
+
+                for (var j = 0; j < stars.length; j++) {
+
+
+                    stars[j].onclick = function(){
+
+
+                        var value =
+                            this.getAttribute(
+                                "data-value"
+                            );
+
+
+                        var current =
+                            recipe.getAttribute(
+                                "data-rating"
+                            );
+
+
+                        if(value == current){
+                            value = 0;
+                        }
+
+
+                        updateRecipeRating(
+                            recipe,
+                            value
+                        );
+
+
+                        sortRecipes(
+                            sortCriteria.value
+                        );
+
+                    };
+
+
+
+                    stars[j].onmouseover = function(){
+
+                        updateStars(
+                            rating,
+                            this.getAttribute(
+                                "data-value"
+                            )
+                        );
+
+                    };
+
+
+
+                    stars[j].onmouseout = function(){
+
+                        updateStars(
+                            rating,
+                            recipe.getAttribute(
+                                "data-rating"
+                            )
+                        );
+
+                    };
+
+
+                }
+
+
+            })(ratings[i]);
+
+        }
+
     }
-    document.getElementById('sort-criteria').addEventListener('change', function() {
-        sortRecipes(this.value);
-    });
-    document.getElementById('search-input').addEventListener('input', function() {
-        filterRecipes(this.value.toLowerCase());
-    });
-    setupStars();
-    sortRecipes('default');
-});
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/Recette/service-worker.js').then(function(registration) {
-      console.log('Service Worker registered with scope:', registration.scope);
-    }, function(err) {
-      console.log('Service Worker registration failed:', err);
-    });
-  });
-}
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('beforeinstallprompt Event fired');
-    e.preventDefault();
-    deferredPrompt = e;
-    const installButton = document.getElementById('installButton');
-    installButton.style.display = 'block';
-    installButton.addEventListener('click', () => {
-        installButton.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
+
+
+
+
+    /*
+    ==========================
+    TRI
+    ==========================
+    */
+
+
+    function sortRecipes(criteria){
+
+        var recipes =
+            Array.prototype.slice.call(
+                recipesGrid.children
+            );
+
+
+        recipes.sort(function(a,b){
+
+
+            if(criteria == "default"){
+                return 0;
             }
-            deferredPrompt = null;
-        });
-    });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Sélection de tous les boutons de favoris sur toutes les pages
-  const favoriteButtons = document.querySelectorAll('.favorite-button');
-  favoriteButtons.forEach(button => {
-    const recipeId = button.getAttribute('data-id');
-    const isFavorited = localStorage.getItem(`favorite-${recipeId}`) === 'true';
-    
-    // Appliquer le style favori si déjà en favoris
-    button.classList.toggle('favorited', isFavorited);
-    // Ajouter l'événement de clic pour marquer/démarquer les favoris
-    button.addEventListener('click', () => {
-      const isNowFavorited = !button.classList.contains('favorited');
-      button.classList.toggle('favorited', isNowFavorited);
-      localStorage.setItem(`favorite-${recipeId}`, isNowFavorited);
-    });
-  });
-  const toggleFavoritesBtn = document.getElementById('toggle-favorites');
-  if (toggleFavoritesBtn) {
-    toggleFavoritesBtn.addEventListener('click', () => {
-      const showFavorites = !toggleFavoritesBtn.classList.contains('showing-all');
-      toggleFavoritesBtn.classList.toggle('showing-all', showFavorites);
-      
-      // Afficher ou masquer les recettes en fonction des favoris
-      document.querySelectorAll('.recipe-card').forEach(recipe => {
-        const recipeId = recipe.getAttribute('data-id');
-        const isFavorited = localStorage.getItem(`favorite-${recipeId}`) === 'true';
-        recipe.style.display = showFavorites && !isFavorited ? 'none' : '';
-      });
-    });
-  }
+
+            var aValue =
+                parseInt(
+                    a.getAttribute(
+                        "data-" + criteria
+                    )
+                ) || 0;
+
+
+            var bValue =
+                parseInt(
+                    b.getAttribute(
+                        "data-" + criteria
+                    )
+                ) || 0;
+
+
+
+            if(criteria == "rating"){
+                return bValue - aValue;
+            }
+
+
+            return aValue - bValue;
+
+
+        });
+
+
+
+        for(var i=0;i<recipes.length;i++){
+
+            recipesGrid.appendChild(
+                recipes[i]
+            );
+
+        }
+
+    }
+
+
+
+    if(sortCriteria){
+
+        sortCriteria.onchange=function(){
+
+            sortRecipes(
+                sortCriteria.value
+            );
+
+        };
+
+    }
+
+
+
+
+
+    /*
+    ==========================
+    RECHERCHE
+    ==========================
+    */
+
+
+    if(searchInput){
+
+        searchInput.oninput=function(){
+
+            var term =
+                searchInput.value.toLowerCase();
+
+
+            var recipes =
+                document.querySelectorAll(
+                    ".recipe-card"
+                );
+
+
+            for(var i=0;i<recipes.length;i++){
+
+
+                var title =
+                    recipes[i]
+                    .querySelector("h2")
+                    .textContent
+                    .toLowerCase();
+
+
+                var description =
+                    recipes[i]
+                    .querySelector("p")
+                    .textContent
+                    .toLowerCase();
+
+
+
+                if(
+                    title.indexOf(term) !== -1 ||
+                    description.indexOf(term) !== -1
+                ){
+
+                    recipes[i].style.display="";
+
+                }else{
+
+                    recipes[i].style.display="none";
+
+                }
+
+            }
+
+        };
+
+    }
+
+
+
+
+
+    /*
+    ==========================
+    AJOUT RECETTES
+    ==========================
+    */
+
+
+    var addButton =
+        document.getElementById(
+            "add-recipe-btn"
+        );
+
+
+    var form =
+        document.getElementById(
+            "recipe-form"
+        );
+
+
+
+    if(addButton && form){
+
+
+        addButton.onclick=function(){
+
+            form.style.display="block";
+
+        };
+
+    }
+
+
+
+
+    var cancelButton =
+        document.getElementById(
+            "cancel-recipe"
+        );
+
+
+    if(cancelButton){
+
+        cancelButton.onclick=function(){
+
+            form.style.display="none";
+
+        };
+
+    }
+
+
+
+
+    var saveButton =
+        document.getElementById(
+            "save-recipe"
+        );
+
+
+
+    if(saveButton){
+
+
+        saveButton.onclick=function(){
+
+
+            var recipe = {
+
+                id: new Date().getTime(),
+
+                title:
+                document.getElementById(
+                    "new-title"
+                ).value,
+
+
+                image:
+                document.getElementById(
+                    "new-image"
+                ).value,
+
+
+                time:
+                document.getElementById(
+                    "new-time"
+                ).value,
+
+
+                description:
+                document.getElementById(
+                    "new-description"
+                ).value,
+
+
+                rating:0
+
+            };
+
+
+
+            var saved =
+                JSON.parse(
+                    localStorage.getItem(
+                        "recipes"
+                    )
+                ) || [];
+
+
+
+            saved.push(recipe);
+
+
+
+            localStorage.setItem(
+                "recipes",
+                JSON.stringify(saved)
+            );
+
+
+
+            location.reload();
+
+        };
+
+    }
+
+
+
+
+
+
+    /*
+    ==========================
+    CHARGEMENT RECETTES AJOUTEES
+    ==========================
+    */
+
+
+    function loadSavedRecipes(){
+
+
+        var saved =
+            JSON.parse(
+                localStorage.getItem(
+                    "recipes"
+                )
+            ) || [];
+
+
+
+        for(var i=0;i<saved.length;i++){
+
+
+            var recipe=saved[i];
+
+
+            var card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "recipe-card";
+
+
+            card.setAttribute(
+                "data-id",
+                recipe.id
+            );
+
+
+            card.setAttribute(
+                "data-rating",
+                recipe.rating
+            );
+
+
+            card.setAttribute(
+                "data-time",
+                recipe.time
+            );
+
+
+
+            card.innerHTML =
+            '<a href="Recette_1/index.html?id=' +               recipe.id + '">' +
+
+            '<img src="' + recipe.image + '">' +
+
+            '<div class="card-content">' +
+
+            '<h2>' + recipe.title + '</h2>' +
+
+            '<p><strong>Ingrédients:</strong> ' +
+            recipe.description +
+            '</p>' +
+
+            '<div class="rating">' +
+
+            '<span class="star" data-value="1">☆</span>' +
+            '<span class="star" data-value="2">☆</span>' +
+            '<span class="star" data-value="3">☆</span>' +
+            '<span class="star" data-value="4">☆</span>' +
+            '<span class="star" data-value="5">☆</span>' +
+
+            '<span class="rating-text">🕓 ' +
+            recipe.time +
+            'min.</span>' +
+
+            '</div></div></a>';
+
+
+
+            recipesGrid.appendChild(card);
+
+        }
+
+    }
+
+
+
+
+
+    loadSavedRecipes();
+
+    setupStars();
+
+    sortRecipes("default");
+
+
 });
