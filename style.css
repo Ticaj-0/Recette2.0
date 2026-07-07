@@ -329,3 +329,29 @@ footer {
   filter: brightness(1.2);
   transition: transform 0.3s;
 }
+
+#recipe-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,.3);
+    z-index:1000;
+}
+
+#recipe-form input,
+#recipe-form textarea {
+    display:block;
+    width:250px;
+    margin:8px;
+    padding:8px;
+}
+
+#add-recipe-btn {
+    margin-top:13px;
+    height:30px;
+    cursor:pointer;
+}
