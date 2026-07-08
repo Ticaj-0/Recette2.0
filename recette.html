@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Recette</title>
+  <!-- ATTENTION : adapte ce chemin vers le style.css de tes pages Recette-X -->
+  <link rel="stylesheet" href="Recette-1/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="logo 'Les Recettes de Ticaj'" class="logo-titre">
+    <div class="divider"></div>
+  </header>
+
+  <div class="container">
+    <div class="recipe-header">
+      <img id="recipe-image" src="" alt="">
+      <div class="recipe-info">
+        <div class="recipe-title" id="recipe-title"></div>
+        <div class="recipe-description" id="recipe-description"></div>
+        <div class="rating" id="recipe-rating">
+          <span class="star" data-value="1">☆</span>
+          <span class="star" data-value="2">☆</span>
+          <span class="star" data-value="3">☆</span>
+          <span class="star" data-value="4">☆</span>
+          <span class="star" data-value="5">☆</span>
+        </div>
+        <div class="recipe-details">
+          <div>🕑 Préparation: <span id="recipe-prep"></span></div>
+          <div>🍳 Cuisson: <span id="recipe-cook"></span></div>
+        </div>
+        <div class="buttons">
+          <button class="favorite-button" id="favorite-button">Sur la liste de favoris</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ingredients-instructions">
+      <div class="ingredients">
+        <h3>Ingrédients</h3>
+        <div class="ingredient-list" id="ingredient-list"></div>
+      </div>
+      <div class="instructions">
+        <h3>Marche à suivre:</h3>
+        <div id="instruction-list"></div>
+        <div class="nutrition">
+          <table class="table">
+            <caption>Profil nutritionnel:</caption>
+            <thead>
+              <tr class="tr">
+                <td class="th">kcal</td>
+                <td class="th">lip</td>
+                <td class="th">glu</td>
+                <td class="th">pro</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tr">
+                <th class="td" id="n-kcal"></th>
+                <th class="td" id="n-lip"></th>
+                <th class="td" id="n-glu"></th>
+                <th class="td" id="n-pro"></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2024 Les Recettes de Ticaj. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
+      const recipe = customRecipes.find(r => r.id === id);
+
+      if (!recipe) {
+        document.querySelector('.container').innerHTML = '<p>Recette introuvable.</p>';
+        return;
+      }
+
+      document.title = recipe.title;
+      document.getElementById('recipe-image').src = recipe.image;
+      document.getElementById('recipe-image').alt = recipe.title;
+      document.getElementById('recipe-title').textContent = recipe.title;
+      document.getElementById('recipe-description').textContent = recipe.description;
+      document.getElementById('recipe-prep').textContent = recipe.prepTime || '-';
+      document.getElementById('recipe-cook').textContent = recipe.cookTime || '-';
+
+      const ingredientList = document.getElementById('ingredient-list');
+      recipe.ingredients.forEach(function(ing) {
+        const row = document.createElement('div');
+        row.className = 'ingredient-row';
+        const qty = document.createElement('div');
+        qty.className = 'quantity';
+        qty.textContent = ing.quantity;
+        const name = document.createElement('div');
+        name.className = 'ingredient';
+        name.textContent = ing.name;
+        row.appendChild(qty);
+        row.appendChild(name);
+        ingredientList.appendChild(row);
+      });
+
+      const instructionList = document.getElementById('instruction-list');
+      recipe.instructions.forEach(function(step) {
+        const p = document.createElement('p');
+        p.textContent = step;
