@@ -355,3 +355,17 @@ footer {
     height:30px;
     cursor:pointer;
 }
+#add-recipe-btn {
+  height: 30px;
+  padding: 5px 12px;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#add-recipe-btn:hover {
+  background-color: rgba(0,0,0,0.05);
+}
