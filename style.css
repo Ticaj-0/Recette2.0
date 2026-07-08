@@ -319,6 +319,16 @@ footer {
   -webkit-tap-highlight-color: transparent;
 }
 
+#toggle-favorites {
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  margin-top: 5px;
+  margin-right: -8px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
 #toggle-favorites img:hover {
     transform: scale(1.2);
     cursor: pointer;
@@ -330,31 +340,6 @@ footer {
   transition: transform 0.3s;
 }
 
-#recipe-form {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 5px 20px rgba(0,0,0,.3);
-    z-index:1000;
-}
-
-#recipe-form input,
-#recipe-form textarea {
-    display:block;
-    width:250px;
-    margin:8px;
-    padding:8px;
-}
-
-#add-recipe-btn {
-    margin-top:13px;
-    height:30px;
-    cursor:pointer;
-}
 #add-recipe-btn {
   height: 30px;
   padding: 5px 12px;
