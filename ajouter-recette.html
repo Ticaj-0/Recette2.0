@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajouter une recette</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="ajouter-recette.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <div class="header">
+      <img src="https://github.com/Ticaj-0/Recette/blob/main/logo.png?raw=true" alt="logo" class="logo" style="height:120px;">
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main class="form-page">
+    <h1>Ajouter une nouvelle recette</h1>
+    <form id="recipe-form">
+      <label>Titre de la recette
+        <input type="text" id="title" required>
+      </label>
+
+      <label>Description
+        <textarea id="description" rows="3"></textarea>
+      </label>
+
+      <label>Image (URL)
+        <input type="url" id="image" placeholder="https://..." required>
+      </label>
+
+      <div class="two-cols">
+        <label>Préparation (ex: 30 min)
+          <input type="text" id="prepTime">
+        </label>
+        <label>Cuisson (ex: 15 min)
+          <input type="text" id="cookTime">
+        </label>
+        <label>Temps total en minutes (tri)
+          <input type="number" id="totalTime" min="0">
+        </label>
+      </div>
+
+      <h2>Ingrédients</h2>
+      <div id="ingredients-container"></div>
+      <button type="button" id="add-ingredient" class="add-row-btn">+ Ajouter un ingrédient</button>
+
+      <h2>Marche à suivre</h2>
+      <div id="instructions-container"></div>
+      <button type="button" id="add-instruction" class="add-row-btn">+ Ajouter une étape</button>
+
+      <h2>Valeurs nutritionnelles (optionnel)</h2>
+      <div class="two-cols">
+        <label>kcal <input type="text" id="n-kcal"></label>
+        <label>Lipides <input type="text" id="n-lip"></label>
+        <label>Glucides <input type="text" id="n-glu"></label>
+        <label>Protéines <input type="text" id="n-pro"></label>
+      </div>
+
+      <button type="submit" id="submit-btn">Enregistrer la recette</button>
+    </form>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2024 Les Recettes de Ticaj. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="ajouter-recette.js"></script>
+</body>
+</html>
