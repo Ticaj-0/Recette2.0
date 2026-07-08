@@ -96,21 +96,60 @@
       document.getElementById('recipe-cook').textContent = recipe.cookTime || '-';
 
       const ingredientList = document.getElementById('ingredient-list');
-      recipe.ingredients.forEach(function(ing) {
+      recipe.ingredients.forEach(ing => {
         const row = document.createElement('div');
         row.className = 'ingredient-row';
-        const qty = document.createElement('div');
-        qty.className = 'quantity';
-        qty.textContent = ing.quantity;
-        const name = document.createElement('div');
-        name.className = 'ingredient';
-        name.textContent = ing.name;
-        row.appendChild(qty);
-        row.appendChild(name);
+        row.innerHTML = `<div class="quantity">${ing.quantity}</div><div class="ingredient">${ing.name}</div>`;
         ingredientList.appendChild(row);
       });
 
       const instructionList = document.getElementById('instruction-list');
-      recipe.instructions.forEach(function(step) {
+      recipe.instructions.forEach(step => {
         const p = document.createElement('p');
         p.textContent = step;
+        instructionList.appendChild(p);
+      });
+
+      document.getElementById('n-kcal').textContent = recipe.nutrition.kcal;
+      document.getElementById('n-lip').textContent = recipe.nutrition.lip;
+      document.getElementById('n-glu').textContent = recipe.nutrition.glu;
+      document.getElementById('n-pro').textContent = recipe.nutrition.pro;
+
+      // Étoiles
+      const stars = document.querySelectorAll('#recipe-rating .star');
+      const savedRating = localStorage.getItem(`rating-${id}`) || 0;
+      updateStars(savedRating);
+      stars.forEach(star => {
+        star.addEventListener('click', () => {
+          const value = star.getAttribute('data-value');
+          const current = localStorage.getItem(`rating-${id}`);
+          if (current === value) {
+            localStorage.removeItem(`rating-${id}`);
+            updateStars(0);
+          } else {
+            localStorage.setItem(`rating-${id}`, value);
+            updateStars(value);
+          }
+        });
+      });
+      function updateStars(value) {
+        stars.forEach(s => s.classList.toggle('filled', parseInt(s.getAttribute('data-value'), 10) <= parseInt(value, 10)));
+      }
+
+      // Favoris
+      const favBtn = document.getElementById('favorite-button');
+      const isFav = localStorage.getItem(`favorite-${id}`) === 'true';
+      updateFavBtn(isFav);
+      favBtn.addEventListener('click', () => {
+        const now = !favBtn.classList.contains('favorited');
+        localStorage.setItem(`favorite-${id}`, now);
+        updateFavBtn(now);
+      });
+      function updateFavBtn(fav) {
+        favBtn.classList.toggle('favorited', fav);
+        favBtn.textContent = fav ? 'Enlever des favoris' : 'Sur la liste de favoris';
+      }
+    });
+  </script>
+</body>
+</html>
