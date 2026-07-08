@@ -8,21 +8,6 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#000000">
 </head>
-<div id="recipe-form" style="display:none;">
-    <input id="new-title" placeholder="Nom de la recette">
-    <input id="new-image" placeholder="URL de l'image">
-    <input id="new-time" placeholder="Temps (minutes)">
-    <textarea id="new-description" placeholder="Ingrédients"></textarea>
-  <textarea id="new-ingredients"
-placeholder="Ingrédients"></textarea>
-
-
-<textarea id="new-instructions"
-placeholder="Préparation"></textarea>
-
-    <button id="save-recipe">Ajouter</button>
-    <button id="cancel-recipe">Annuler</button>
-</div>
 <body>
   <header>
     <div class="header">
@@ -30,8 +15,8 @@ placeholder="Préparation"></textarea>
     </div>
   <div class="divider"></div>
     <div class="sort-options">
-      <button id="add-recipe-btn">➕ Ajouter</button>
       <button id="toggle-favorites"><img src="https://cdn.icon-icons.com/icons2/3767/PNG/512/bookmark_favorite_icon_231419.png" alt="favoris" class="favoris-img"></button>
+      <button id="add-recipe-btn" onclick="window.location.href='ajouter-recette.html'">+ Ajouter</button>
       <div class="sort-container">
       <span class="select">
     <label class="trier" for="sort-criteria">Trier par:</label>
