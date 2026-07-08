@@ -1,5 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Bouton "Ajouter une recette" ---
+    const addRecipeBtn = document.getElementById('add-recipe-btn');
+    if (addRecipeBtn) {
+        addRecipeBtn.addEventListener('click', function() {
+            window.location.href = 'ajouter-recette.html';
+        });
+    }
+
     const recipesGrid = document.querySelector('.recipes-grid');
+
+    function deleteCustomRecipe(id) {
+        const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
+        const updated = customRecipes.filter(function(r) { return r.id !== id; });
+        localStorage.setItem('customRecipes', JSON.stringify(updated));
+        localStorage.removeItem('rating-' + id);
+        localStorage.removeItem('favorite-' + id);
+    }
 
     // Charge les recettes ajoutées par l'utilisateur depuis le localStorage
     function loadCustomRecipes() {
@@ -54,7 +70,21 @@ document.addEventListener('DOMContentLoaded', function() {
             link.appendChild(img);
             link.appendChild(cardContent);
 
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-recipe-btn';
+            deleteBtn.setAttribute('aria-label', 'Supprimer la recette');
+            deleteBtn.textContent = '🗑️';
+            deleteBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (confirm('Supprimer la recette "' + recipe.title + '" ?')) {
+                    deleteCustomRecipe(recipe.id);
+                    card.remove();
+                }
+            });
+
             card.appendChild(link);
+            card.appendChild(deleteBtn);
             recipesGrid.appendChild(card);
         });
     }
