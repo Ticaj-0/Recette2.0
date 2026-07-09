@@ -342,15 +342,22 @@ footer {
 
 #add-recipe-btn {
   height: 30px;
-  padding: 5px 12px;
-  border: 1px solid rgba(0,0,0,0.4);
-  border-radius: 5px;
-  background-color: white;
+  width: 30px;
+  border: none;
+  background-color: transparent;
+  margin-top: 5px;
   cursor: pointer;
-  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-tap-highlight-color: transparent;
 }
 
-#add-recipe-btn:hover {
-  background-color: rgba(0,0,0,0.05);
+.add-recipe-img {
+  filter: brightness(1.2);
+  transition: transform 0.2s;
+}
+
+#add-recipe-btn:hover .add-recipe-img {
+  transform: scale(1.15);
 }
