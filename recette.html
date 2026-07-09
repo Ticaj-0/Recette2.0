@@ -97,8 +97,8 @@
       document.getElementById('recipe-title').textContent = recipe.title;
       document.getElementById('recipe-description').textContent = recipe.description;
       const servings = recipe.servings || 2;
-      document.getElementById('servings-icon').src = servings + 'pers.png';
-      document.getElementById('servings-icon').alt = servings + ' personnes';
+      document.getElementById('servings-icon').src = 'logo/' servings + 'pers.png';
+      document.getElementById('servings-icon').alt = 'logo/' servings + ' personnes';
       document.getElementById('recipe-prep').textContent = recipe.prepTime || '-';
       document.getElementById('recipe-cook').textContent = recipe.cookTime || '-';
 
