@@ -150,6 +150,18 @@
         favBtn.classList.toggle('favorited', fav);
         favBtn.textContent = fav ? 'Enlever des favoris' : 'Sur la liste de favoris';
       }
+      // Supprimer la recette
+      const deleteBtn = document.getElementById('delete-button');
+      deleteBtn.addEventListener('click', function() {
+        if (confirm('Supprimer définitivement la recette "' + recipe.title + '" ?')) {
+          const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
+          const updated = customRecipes.filter(function(r) { return r.id !== id; });
+          localStorage.setItem('customRecipes', JSON.stringify(updated));
+          localStorage.removeItem('rating-' + id);
+          localStorage.removeItem('favorite-' + id);
+          window.location.href = 'index.html';
+        }
+      });
     });
   </script>
 </body>
