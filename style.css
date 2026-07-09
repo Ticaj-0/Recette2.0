@@ -314,17 +314,7 @@ footer {
   border: none;
   background-color: transparent;
   margin-top: 5px;
-  margin-right: -8px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-#toggle-favorites {
-  height: 30px;
-  border: none;
-  background-color: transparent;
-  margin-top: 5px;
-  margin-right: -8px;
+  margin-right: -18px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -344,7 +334,8 @@ footer {
   height: 30px;
   border: none;
   background-color: transparent;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-right: -8px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -353,12 +344,11 @@ footer {
 }
 
 .add-recipe-img {
-  height: 35px;
+  height: 55px;
   filter: brightness(1.2);
   transition: transform 0.3s;
 }
 
 #add-recipe-btn:hover .add-recipe-img {
   transform: scale(1.2);
-}
 }
