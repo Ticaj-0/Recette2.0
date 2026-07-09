@@ -9,7 +9,7 @@
 </head>
 <body>
   <header>
-    <img src="logo/logo.png" alt="logo 'Les Recettes de Ticaj'" class="logo-titre">
+    <img src="logo.png" alt="logo 'Les Recettes de Ticaj'" class="logo-titre">
     <div class="divider"></div>
   </header>
 
@@ -41,8 +41,6 @@
       <div class="ingredients">
         <h3>Ingrédients</h3>
         <p>Nombre de personnes: <img id="servings-icon" src="" alt="nombre de personnes" class="logo2pers"></p>
-        <div class="ingredient-list" id="ingredient-list"></div>
-    </div>
         <div class="ingredient-list" id="ingredient-list"></div>
       </div>
       <div class="instructions">
@@ -84,7 +82,7 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
       const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
-      const recipe = customRecipes.find(r => r.id === id);
+      const recipe = customRecipes.find(function(r) { return r.id === id; });
 
       if (!recipe) {
         document.querySelector('.container').innerHTML = '<p>Recette introuvable.</p>';
@@ -96,27 +94,39 @@
       document.getElementById('recipe-image').alt = recipe.title;
       document.getElementById('recipe-title').textContent = recipe.title;
       document.getElementById('recipe-description').textContent = recipe.description;
-      const servings = recipe.servings || 2;
-      document.getElementById('servings-icon').src = 'logo/' servings + 'pers.png';
-      document.getElementById('servings-icon').alt = 'logo/' servings + ' personnes';
       document.getElementById('recipe-prep').textContent = recipe.prepTime || '-';
       document.getElementById('recipe-cook').textContent = recipe.cookTime || '-';
 
+      // Nombre de personnes
+      const servings = recipe.servings || 2;
+      document.getElementById('servings-icon').src = 'logo/' servings + 'pers.png';
+      document.getElementById('servings-icon').alt = 'logo/' servings + ' personnes';
+
+      // Ingrédients
       const ingredientList = document.getElementById('ingredient-list');
-      recipe.ingredients.forEach(ing => {
+      recipe.ingredients.forEach(function(ing) {
         const row = document.createElement('div');
         row.className = 'ingredient-row';
-        row.innerHTML = `<div class="quantity">${ing.quantity}</div><div class="ingredient">${ing.name}</div>`;
+        const qty = document.createElement('div');
+        qty.className = 'quantity';
+        qty.textContent = ing.quantity;
+        const name = document.createElement('div');
+        name.className = 'ingredient';
+        name.textContent = ing.name;
+        row.appendChild(qty);
+        row.appendChild(name);
         ingredientList.appendChild(row);
       });
 
+      // Instructions
       const instructionList = document.getElementById('instruction-list');
-      recipe.instructions.forEach(step => {
+      recipe.instructions.forEach(function(step) {
         const p = document.createElement('p');
         p.textContent = step;
         instructionList.appendChild(p);
       });
 
+      // Nutrition
       document.getElementById('n-kcal').textContent = recipe.nutrition.kcal;
       document.getElementById('n-lip').textContent = recipe.nutrition.lip;
       document.getElementById('n-glu').textContent = recipe.nutrition.glu;
@@ -124,43 +134,45 @@
 
       // Étoiles
       const stars = document.querySelectorAll('#recipe-rating .star');
-      const savedRating = localStorage.getItem(`rating-${id}`) || 0;
+      const savedRating = localStorage.getItem('rating-' + id) || 0;
       updateStars(savedRating);
-      stars.forEach(star => {
-        star.addEventListener('click', () => {
+      stars.forEach(function(star) {
+        star.addEventListener('click', function() {
           const value = star.getAttribute('data-value');
-          const current = localStorage.getItem(`rating-${id}`);
+          const current = localStorage.getItem('rating-' + id);
           if (current === value) {
-            localStorage.removeItem(`rating-${id}`);
+            localStorage.removeItem('rating-' + id);
             updateStars(0);
           } else {
-            localStorage.setItem(`rating-${id}`, value);
+            localStorage.setItem('rating-' + id, value);
             updateStars(value);
           }
         });
       });
       function updateStars(value) {
-        stars.forEach(s => s.classList.toggle('filled', parseInt(s.getAttribute('data-value'), 10) <= parseInt(value, 10)));
+        stars.forEach(function(s) {
+          s.classList.toggle('filled', parseInt(s.getAttribute('data-value'), 10) <= parseInt(value, 10));
+        });
       }
 
       // Favoris
       const favBtn = document.getElementById('favorite-button');
-      const isFav = localStorage.getItem(`favorite-${id}`) === 'true';
+      const isFav = localStorage.getItem('favorite-' + id) === 'true';
       updateFavBtn(isFav);
-      favBtn.addEventListener('click', () => {
+      favBtn.addEventListener('click', function() {
         const now = !favBtn.classList.contains('favorited');
-        localStorage.setItem(`favorite-${id}`, now);
+        localStorage.setItem('favorite-' + id, now);
         updateFavBtn(now);
       });
       function updateFavBtn(fav) {
         favBtn.classList.toggle('favorited', fav);
         favBtn.textContent = fav ? 'Enlever des favoris' : 'Sur la liste de favoris';
       }
-      // Supprimer la recette
+
+      // Suppression
       const deleteBtn = document.getElementById('delete-button');
       deleteBtn.addEventListener('click', function() {
         if (confirm('Supprimer définitivement la recette "' + recipe.title + '" ?')) {
-          const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
           const updated = customRecipes.filter(function(r) { return r.id !== id; });
           localStorage.setItem('customRecipes', JSON.stringify(updated));
           localStorage.removeItem('rating-' + id);
@@ -168,6 +180,8 @@
           window.location.href = 'index.html';
         }
       });
+
+      // Recharge si la page vient du cache du navigateur (bouton précédent)
       window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
           window.location.reload();
