@@ -342,7 +342,6 @@ footer {
 
 #add-recipe-btn {
   height: 30px;
-  width: 30px;
   border: none;
   background-color: transparent;
   margin-top: 5px;
@@ -354,10 +353,12 @@ footer {
 }
 
 .add-recipe-img {
+  height: 35px;
   filter: brightness(1.2);
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 #add-recipe-btn:hover .add-recipe-img {
-  transform: scale(1.15);
+  transform: scale(1.2);
+}
 }
