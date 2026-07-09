@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const prepTime = document.getElementById('prepTime').value.trim();
         const cookTime = document.getElementById('cookTime').value.trim();
         const totalTime = parseInt(document.getElementById('totalTime').value, 10) || 0;
+        const servings = parseInt(document.getElementById('servings').value, 10) || 2;
 
         const ingredientRows = document.querySelectorAll('#ingredients-container .dynamic-row');
         const ingredients = [];
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             prepTime: prepTime,
             cookTime: cookTime,
             totalTime: totalTime,
+            servings: servings,
             ingredients: ingredients,
             instructions: instructions,
             nutrition: {
