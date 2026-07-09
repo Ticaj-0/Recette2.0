@@ -40,8 +40,18 @@
         <label>Temps total en minutes (tri)
           <input type="number" id="totalTime" min="0">
         </label>
+        <label>Nombre de personnes
+          <select id="servings">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </label>
       </div>
-
+      
       <h2>Ingrédients</h2>
       <div id="ingredients-container"></div>
       <button type="button" id="add-ingredient" class="add-row-btn">+ Ajouter un ingrédient</button>
