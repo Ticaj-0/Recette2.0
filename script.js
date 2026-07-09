@@ -9,14 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const recipesGrid = document.querySelector('.recipes-grid');
 
-    function deleteCustomRecipe(id) {
-        const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
-        const updated = customRecipes.filter(function(r) { return r.id !== id; });
-        localStorage.setItem('customRecipes', JSON.stringify(updated));
-        localStorage.removeItem('rating-' + id);
-        localStorage.removeItem('favorite-' + id);
-    }
-
     // Charge les recettes ajoutées par l'utilisateur depuis le localStorage
     function loadCustomRecipes() {
         const customRecipes = JSON.parse(localStorage.getItem('customRecipes') || '[]');
@@ -70,21 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.appendChild(img);
             link.appendChild(cardContent);
 
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'delete-recipe-btn';
-            deleteBtn.setAttribute('aria-label', 'Supprimer la recette');
-            deleteBtn.textContent = '🗑️';
-            deleteBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (confirm('Supprimer la recette "' + recipe.title + '" ?')) {
-                    deleteCustomRecipe(recipe.id);
-                    card.remove();
-                }
-            });
-
             card.appendChild(link);
-            card.appendChild(deleteBtn);
             recipesGrid.appendChild(card);
         });
     }
@@ -137,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const savedRating = localStorage.getItem(`rating-${recipe.getAttribute('data-id')}`) || rating.getAttribute('data-rating');
                 recipe.setAttribute('data-rating', savedRating);
                 updateStars(rating, savedRating);
-                star.addEventListener('click', () => {
+                star.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     const value = star.getAttribute('data-value');
                     const currentRating = recipe.getAttribute('data-rating');
                     updateRecipeRating(recipe, value === currentRating ? '0' : value);
@@ -157,4 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('input', () => filterRecipes(searchInput.value.toLowerCase()));
     setupStars();
     sortRecipes('default');
+
+    // Force un rechargement si la page est restaurée depuis le cache du navigateur
+    // (bouton "précédent"), pour afficher les ratings/favoris à jour.
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
 });
