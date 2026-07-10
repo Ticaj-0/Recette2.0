@@ -245,7 +245,7 @@ a {
       box-sizing: border-box;
       width: auto;
       height: auto;
-      margin-top: 15px;
+      margin-top: 12px;
       margin-left: -2%;
       margin-right: -4%;
       padding: 2px 8px;
@@ -255,7 +255,7 @@ a {
     }
   #sort-criteria {
     height: 16px;
-    width: 50px;
+    width: 40px;
     font-size: 10px;
     padding: 0 1px;
     margin: 0;
