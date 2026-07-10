@@ -265,6 +265,20 @@ a {
   .favoris-img {
     margin-top: 2px;
   }
+    #toggle-favorites {
+        margin-right: -4px;
+        padding: 0;
+      }
+    
+      #add-recipe-btn {
+        margin-right: -4px;
+        margin-left: -4px;
+        padding: 0;
+      }
+    
+      .add-recipe-img {
+        height: 38px;
+      }
 }
 
 footer {
