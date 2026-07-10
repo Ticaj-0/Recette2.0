@@ -248,7 +248,7 @@ a {
       margin-top: 12px;
       margin-left: -2%;
       margin-right: -4%;
-      padding: 2px 8px;
+      padding: 2px 8px 2px 4px;
       display: inline-flex;
       align-items: center;
       flex-wrap: nowrap;
@@ -257,7 +257,7 @@ a {
     height: 16px;
     width: 50px;
     font-size: 10px;
-    padding: -5 1px;
+    padding: 0 1px;
     margin: 0;
     flex-shrink: 0;
     line-height: 1;
