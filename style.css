@@ -257,6 +257,8 @@ a {
     margin: 0;
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
     #search-input {
       font-size: 12px;
@@ -268,7 +270,7 @@ a {
     margin-top: 2px;
   }
     #toggle-favorites {
-        margin-right: 0px;
+        margin-right: 5px;
         padding: 0;
       }
     
