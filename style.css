@@ -255,9 +255,9 @@ a {
     }
   #sort-criteria {
     height: 16px;
-    width: 40px;
+    width: 50px;
     font-size: 10px;
-    padding: 0 1px;
+    padding: -5 1px;
     margin: 0;
     flex-shrink: 0;
     line-height: 1;
