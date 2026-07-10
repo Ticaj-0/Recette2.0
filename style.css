@@ -252,9 +252,11 @@ a {
     padding: 1px;
   }
   .select {
-    width: 115px;
-    height: 15px;
-    margin-left: -30px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    display: flex;
+    align-items: center;
   }
     #search-input {
       font-size: 12px;
