@@ -139,24 +139,23 @@ document.addEventListener('DOMContentLoaded', function() {
     sortRecipes('default');
 
     // Rafraîchit juste l'affichage des étoiles depuis le localStorage,
-        // sans recharger toute la page (beaucoup plus rapide).
-        function refreshRatings() {
-            document.querySelectorAll('.recipe-card').forEach((card) => {
-                const cardId = card.getAttribute('data-id');
-                const savedRating = localStorage.getItem(`rating-${cardId}`) || '0';
-                card.setAttribute('data-rating', savedRating);
-                const ratingDiv = card.querySelector('.rating');
-                if (ratingDiv) {
-                    updateStars(ratingDiv, savedRating);
-                }
-            });
-            sortRecipes(sortCriteria.value);
-        }
-    
-        // Quand on revient sur la page (via bouton précédent ou changement d'onglet),
-        // on rafraîchit juste les données au lieu de tout recharger.
-        window.addEventListener('pageshow', () => {
-            refreshRatings();
+    // sans recharger toute la page (beaucoup plus rapide).
+    function refreshRatings() {
+        document.querySelectorAll('.recipe-card').forEach((card) => {
+            const cardId = card.getAttribute('data-id');
+            const savedRating = localStorage.getItem(`rating-${cardId}`) || '0';
+            card.setAttribute('data-rating', savedRating);
+            const ratingDiv = card.querySelector('.rating');
+            if (ratingDiv) {
+                updateStars(ratingDiv, savedRating);
+            }
         });
+        sortRecipes(sortCriteria.value);
+    }
+
+    // Quand on revient sur la page (via bouton précédent ou changement d'onglet),
+    // on rafraîchit juste les données au lieu de tout recharger.
+    window.addEventListener('pageshow', () => {
+        refreshRatings();
     });
 });
