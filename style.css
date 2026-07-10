@@ -239,6 +239,7 @@ a {
           margin: 0;
           white-space: nowrap;
           flex-shrink: 0;
+          line-height: 1;
         }
     .sort-container {
       box-sizing: border-box;
@@ -247,18 +248,19 @@ a {
       margin-top: 6px;
       margin-left: -2%;
       margin-right: -4%;
-      padding: 4px 8px;
+      padding: 2px 8px;
       display: inline-flex;
       align-items: center;
       flex-wrap: nowrap;
     }
   #sort-criteria {
-    height: 20px;
+    height: 16px;
     width: 55px;
     font-size: 10px;
-    padding: 1px;
+    padding: 0 1px;
     margin: 0;
     flex-shrink: 0;
+    line-height: 1;
   }
   .select {
     width: auto;
