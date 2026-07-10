@@ -266,13 +266,13 @@ a {
     margin-top: 2px;
   }
     #toggle-favorites {
-        margin-right: -4px;
+        margin-right: 0px;
         padding: 0;
       }
     
       #add-recipe-btn {
-        margin-right: -4px;
-        margin-left: -4px;
+        margin-right: 0px;
+        margin-left: 0px;
         padding: 0;
       }
     
