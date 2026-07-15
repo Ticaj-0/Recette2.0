@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const stars = document.querySelectorAll('.star');
-    const pageId = 'recette-1'; // Remplacez par l'identifiant unique de chaque page
+    const pageId = '1'; // doit correspondre au data-id="1" de la carte sur index.html
     const savedRating = localStorage.getItem(`rating-${pageId}`);
     if (savedRating) {
         updateStars(savedRating);
@@ -33,6 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
             stars[i].classList.add('filled');
         }
     }
+
+    window.addEventListener('pageshow', () => {
+        const currentRating = localStorage.getItem(`rating-${pageId}`) || 0;
+        updateStars(currentRating);
+    });
 });
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
