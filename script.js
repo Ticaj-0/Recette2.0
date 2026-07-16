@@ -158,4 +158,65 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('pageshow', () => {
         refreshRatings();
     });
+
+    // --- Bouton favoris individuel (si présent sur une carte) ---
+    function updateFavoriteButton(button, isFavorited) {
+        if (isFavorited) {
+            button.classList.add('favorited');
+            button.textContent = 'Enlever des favoris';
+        } else {
+            button.classList.remove('favorited');
+            button.textContent = 'Sur la liste de favoris';
+        }
+    }
+
+    const favoriteButtons = document.querySelectorAll('.favorite-button');
+    favoriteButtons.forEach(button => {
+        const recipeId = button.getAttribute('data-id');
+        const isFavorited = localStorage.getItem(`favorite-${recipeId}`) === 'true';
+        updateFavoriteButton(button, isFavorited);
+        button.addEventListener('click', () => {
+            const isNowFavorited = !button.classList.contains('favorited');
+            localStorage.setItem(`favorite-${recipeId}`, isNowFavorited);
+            updateFavoriteButton(button, isNowFavorited);
+        });
+    });
+
+    // --- Affichage/masquage des favoris ---
+    const toggleFavoritesBtn = document.getElementById('toggle-favorites');
+    if (toggleFavoritesBtn) {
+        toggleFavoritesBtn.addEventListener('click', () => {
+            const showFavorites = !toggleFavoritesBtn.classList.contains('showing-all');
+            toggleFavoritesBtn.classList.toggle('showing-all', showFavorites);
+
+            document.querySelectorAll('.recipe-card').forEach(recipe => {
+                const recipeId = recipe.getAttribute('data-id');
+                const isFavorited = localStorage.getItem(`favorite-${recipeId}`) === 'true';
+                recipe.style.display = showFavorites && !isFavorited ? 'none' : '';
+            });
+        });
+    }
+
+    // --- Bouton "Installer l'app mobile" ---
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installButton = document.getElementById('installButton');
+        if (installButton) {
+            installButton.style.display = 'block';
+            installButton.addEventListener('click', () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        }
+    });
 });
