@@ -18,7 +18,7 @@ h1 {
 }
 
 #search-input {
-    margin: 13px 1% 0px 10px;
+    margin: 13px -1% 0px 10px;
     width: 200px;
     height: 16px;
     padding: 5px; /* Ajouter un padding pour le confort de saisie */
@@ -275,7 +275,7 @@ a {
       font-size: 12px;
       width: 147px;
       height: 14px;
-      margin-right: 4%;
+      margin-right: 2%;
     } 
   .favoris-img {
     margin-top: 2px;
