@@ -1,36 +1,32 @@
-const CACHE_NAME = 'recettes-cache-v1';
+const CACHE_NAME = 'recettes-cache-v2';
 const urlsToCache = [
   'index.html',
   'script.js',
   'style.css',
+  'ajouter-recette.html',
+  'ajouter-recette.js',
+  'ajouter-recette.css',
+  'recette.html',
+  'manifest.json',
+  'logo/1pers.png',
+  'logo/2pers.png',
+  'logo/3pers.png',
+  'logo/4pers.png',
+  'logo/5pers.png',
+  'logo/6pers.png',
+  'logo/icon_fav.png',
+  'logo/icon_plus.png',
+  'logo/logo détouré.png',
+  'logo/logo.png',
+  'logo/logo_carre.png',
   'Recette-1/index.html',
   'Recette-1/script.js',
   'Recette-1/style.css',
-  'Recette-2/index.html',
-  'Recette-2/script.js',
-  'Recette-2/style.css',
-  'Recette-3/index.html',
-  'Recette-3/script.js',
-  'Recette-3/style.css',
-  'Recette-4/index.html',
-  'Recette-4/script.js',
-  'Recette-4/style.css',
-  'Recette-5/index.html',
-  'Recette-5/script.js',
-  'Recette-5/style.css',
-  'Recette-6/index.html',
-  'Recette-6/script.js',
-  'Recette-6/style.css',
-  'Recette-7/index.html',
-  'Recette-7/script.js',
-  'Recette-7/style.css',
-  'Recette-8/index.html',
-  'Recette-8/script.js',
-  'Recette-8/style.css',
 ];
 
 // Installer le service worker et mettre en cache les ressources
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -53,7 +49,7 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
@@ -81,5 +77,3 @@ self.addEventListener('fetch', event => {
       })
   );
 });
-
-
