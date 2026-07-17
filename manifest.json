@@ -2,18 +2,18 @@
   "name": "Les Recettes de Ticaj",
   "short_name": "Les Recettes de Ticaj",
   "description": "Une collection de recettes délicieuses.",
-  "start_url": "/Recette/index.html",
+  "start_url": "/Recette2.0/index.html",
   "display": "standalone",
   "background_color": "rgba(245,244,242,255)",
   "theme_color": "rgba(245,244,242,255)",
   "icons": [
     {
-      "src": "https://github.com/Ticaj-0/Recette/blob/main/logo%20d%C3%A9tour%C3%A9.png?raw=true",
+      "src": "https://github.com/Ticaj-0/Recette2.0/blob/main/logo/logo%20d%C3%A9tour%C3%A9.png?raw=true",
       "sizes": "220x220",
       "type": "image/png"
     },
     {
-      "src": "https://github.com/Ticaj-0/Recette/blob/main/logo%20d%C3%A9tour%C3%A9.png?raw=true",
+      "src": "https://github.com/Ticaj-0/Recette2.0/blob/main/logo/logo%20d%C3%A9tour%C3%A9.png?raw=true",
       "sizes": "512x512",
       "type": "image/png"
     }
