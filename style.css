@@ -13,15 +13,15 @@ body {
 }
 
 h1 {
-    margin: 30px; /* Supprimer les marges pour le titre */
-    font-size: 2em; /* Taille du titre ajustée */
+    margin: 30px;
+    font-size: 2em;
 }
 
 #search-input {
     margin: 13px -1% 0px 10px;
     width: 200px;
     height: 16px;
-    padding: 5px; /* Ajouter un padding pour le confort de saisie */
+    padding: 5px;
 }
 
 .recipes-grid {
@@ -61,7 +61,7 @@ h1 {
 
 .card-content {
     padding: 16px;
-    padding-bottom: 40px; /* Ajouter de l'espace en bas pour les étoiles */
+    padding-bottom: 40px;
     position: relative;
     background-color: white;
     -webkit-tap-highlight-color: transparent;
@@ -83,7 +83,7 @@ h1 {
 
 .rating {
     position: absolute;
-    bottom: 10px; /* Ajuster l'espace en bas pour que les étoiles ne se chevauchent pas avec le texte */
+    bottom: 10px;
     left: 16px;
     right: 16px;
     display: flex;
@@ -96,13 +96,13 @@ h1 {
 .star {
     display: inline-block;
     font-size: 1.4em;
-    color: #ddd; /* Couleur des étoiles non sélectionnées */
+    color: #ddd;
     cursor: pointer;
   transition: color 0.2s;
 }
 
 .star.filled {
-    color: #ffcc00; /* Couleur des étoiles sélectionnées */
+    color: #ffcc00;
 }
 
 .rating-text {
@@ -134,7 +134,7 @@ h1 {
 .sort-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espace entre le label et le sélecteur */
+    gap: 10px;
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
@@ -234,6 +234,39 @@ a {
     .rating-text {
         font-size: 0.95em;
     }
+
+    /* --- Rangée boutons/tri/recherche : favori et ajouter à distance égale des bords --- */
+    .sort-options {
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+        width: 100%;
+        gap: 6px;
+    }
+
+    #toggle-favorites {
+        order: 1;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .sort-container {
+        order: 2;
+    }
+
+    #search-input {
+        order: 3;
+    }
+
+    #add-recipe-btn {
+        order: 4;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
     .trier {
           font-size: 11px;
           margin: 0;
@@ -245,9 +278,9 @@ a {
       box-sizing: border-box;
       width: auto;
       height: auto;
-      margin-top: 12.5px;
-      margin-left: -2%;
-      margin-right: -4%;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
       padding: 2px 8px 2px 1px;
       display: inline-flex;
       align-items: center;
@@ -273,27 +306,19 @@ a {
   }
     #search-input {
       font-size: 12px;
-      width: 147px;
+      width: 120px;
       height: 14px;
-      margin-right: 2%;
-    } 
+      margin: 0;
+      flex-shrink: 1;
+      min-width: 0;
+    }
   .favoris-img {
     margin-top: 2px;
   }
-    #toggle-favorites {
-        margin-right: 0px;
-        padding: 0;
-      }
-    
-      #add-recipe-btn {
-        margin-right: 0px;
-        margin-left: -12px;
-        padding: 0;
-      }
-    
-      .add-recipe-img {
-        height: 38px;
-      }
+
+  .add-recipe-img {
+    height: 38px;
+  }
 }
 
 footer {
@@ -364,7 +389,7 @@ footer {
   border: none;
   background-color: transparent;
   margin-top: 10px;
-  margin-right: 0px;
+  margin-right: -10px;
   cursor: pointer;
   display: flex;
   align-items: center;
