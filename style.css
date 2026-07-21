@@ -13,15 +13,15 @@ body {
 }
 
 h1 {
-    margin: 30px;
-    font-size: 2em;
+    margin: 30px; /* Supprimer les marges pour le titre */
+    font-size: 2em; /* Taille du titre ajustée */
 }
 
 #search-input {
     margin: 13px -1% 0px 10px;
     width: 200px;
     height: 16px;
-    padding: 5px;
+    padding: 5px; /* Ajouter un padding pour le confort de saisie */
 }
 
 .recipes-grid {
@@ -61,7 +61,7 @@ h1 {
 
 .card-content {
     padding: 16px;
-    padding-bottom: 40px;
+    padding-bottom: 40px; /* Ajouter de l'espace en bas pour les étoiles */
     position: relative;
     background-color: white;
     -webkit-tap-highlight-color: transparent;
@@ -83,7 +83,7 @@ h1 {
 
 .rating {
     position: absolute;
-    bottom: 10px;
+    bottom: 10px; /* Ajuster l'espace en bas pour que les étoiles ne se chevauchent pas avec le texte */
     left: 16px;
     right: 16px;
     display: flex;
@@ -96,13 +96,13 @@ h1 {
 .star {
     display: inline-block;
     font-size: 1.4em;
-    color: #ddd;
+    color: #ddd; /* Couleur des étoiles non sélectionnées */
     cursor: pointer;
   transition: color 0.2s;
 }
 
 .star.filled {
-    color: #ffcc00;
+    color: #ffcc00; /* Couleur des étoiles sélectionnées */
 }
 
 .rating-text {
@@ -134,7 +134,7 @@ h1 {
 .sort-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Espace entre le label et le sélecteur */
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
@@ -247,8 +247,12 @@ a {
 
     #toggle-favorites {
         order: 1;
+        height: 40px;
         margin: 0;
         padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-shrink: 0;
     }
 
@@ -262,7 +266,9 @@ a {
 
     #add-recipe-btn {
         order: 4;
+        height: 40px;
         margin: 0;
+        margin-left: -6px;
         padding: 0;
         flex-shrink: 0;
     }
@@ -306,8 +312,8 @@ a {
   }
     #search-input {
       font-size: 12px;
-      width: 120px;
-      height: 14px;
+      width: 140px;
+      height: 18px;
       margin: 0;
       flex-shrink: 1;
       min-width: 0;
@@ -370,6 +376,9 @@ footer {
   margin-top: 5px;
   margin-right: -12px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-tap-highlight-color: transparent;
 }
 
