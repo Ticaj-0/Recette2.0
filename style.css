@@ -268,7 +268,7 @@ a {
         order: 4;
         height: 40px;
         margin: 0;
-        margin-left: -16px;
+        margin-left: -12px;
         padding: 0;
         flex-shrink: 0;
     }
@@ -312,7 +312,7 @@ a {
   }
     #search-input {
       font-size: 12px;
-      width: 160px;
+      width: 150px;
       height: 14px;
       margin: 0;
       flex-shrink: 1;
